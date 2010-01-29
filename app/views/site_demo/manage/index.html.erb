@@ -1,0 +1,12 @@
+<% action_panel do |p| -%>
+ <%= p.link "Create new demo" ,:action => "create", :icon => "add.gif" %>
+ <%= p.link "Configure Template" ,:action => "templates", :icon => "configure.gif" %>
+<% end -%>
+
+<hr/>
+
+<div class='admin_content'>
+
+<%= active_table_render :demo_domains_table %>
+
+</div>

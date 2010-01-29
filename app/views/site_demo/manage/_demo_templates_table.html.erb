@@ -1,0 +1,10 @@
+<% active_table_for :demo_templates_table, @tbl,
+   :actions => [['Delete','delete','Delete the selected templates?']] do |t| -%>
+<% active_tr "template",t.id do |tr| -%>
+  <td><%= tr.checkbox -%></td>
+  <td><%= t.protected_template ? "*" : '' -%></td>
+  <td><%= link_to v(t.name), :action => 'edit_template', :path => t.id -%></td>
+  <td><%= v t.directory -%></td>
+  <td><%= v t.created_at.to_s(:short) -%></td>
+<% end -%>
+<% end -%>

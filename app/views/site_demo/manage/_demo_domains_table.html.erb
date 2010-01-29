@@ -1,0 +1,26 @@
+<% active_table_for :demo_domains_table, @tbl,
+   :actions => [
+                [ "Expire","expire","Expire domains right now? (They will still need to be harvested)" ],
+                [ "Extend 10Min","extend10"],
+                [ "Extend 60Min", "extend60"],
+                [ "Extend 1 Day", "extendday"]] do |t| -%>
+<% active_tr 'demo',t.id do |tr| -%>
+ <td><%= tr.checkbox -%></td>
+ <td><%= link_to(v(t.name),"http://#{t.name}/website") -%></td>
+ <td><%= t.active? ? 'Yes' : 'No' -%></td>
+ <td><%= t.activated_at.to_s(:short) if t.activated_at -%></td>
+ <td>
+   <% if t.active? && t.expires_at -%>
+     <% if t.expires_at < Time.now -%>
+     <div class='error'><%= t.expires_at.to_s(:short) if t.expires_at -%></div>
+     <% else -%>
+     <%= t.expires_at.to_s(:short) if t.expires_at -%>
+     <% end -%>
+   <% end -%>
+</td>
+ <td><%= t.site_demo_template.name if t.site_demo_template -%></td>
+ <td><%= v t.login_email  -%></td>
+ <td><%= v t.login_password -%></td>
+<% end -%>
+
+<% end -%>

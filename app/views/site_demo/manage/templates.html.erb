@@ -1,0 +1,11 @@
+<% action_panel do |p| -%>
+  <%= p.link "Create Template", :action => 'edit_template',:icon => 'add.gif' -%>
+<% end -%>
+
+<hr/>
+
+<div class='admin_content'>
+
+<%= active_table_render :demo_templates_table %>
+
+</div>

@@ -1,0 +1,9 @@
+<div class='admin_content'>
+  <% admin_form_for :tpl, @tpl do |f| -%>
+    <%= f.text_field :name -%>
+    <%= f.radio_buttons :protected_template, [['Yes',true],['No',false]] -%>
+    <%= f.text_field :weight -%>
+    <%= f.text_field :directory -%>
+    <%= f.cancel_submit_buttons -%>
+  <% end -%>
+</div>

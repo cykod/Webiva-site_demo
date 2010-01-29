@@ -1,0 +1,13 @@
+<div class='admin_content'>
+
+<% if @site_demo_domain -%>
+<% admin_form_for :domain, @site_demo_domain do |f| -%>
+  <%= f.text_field :login_email -%>
+  <%= f.select :site_demo_template_id, SiteDemoTemplate.select_options -%>
+  <%= f.text_field :expiration_minutes -%>
+  <%= f.cancel_submit_buttons "Cancel","Submit" -%>
+<% end -%>
+<% else -%>
+There are no available domains, please raise the demo limit
+<% end -%>
+</div>
