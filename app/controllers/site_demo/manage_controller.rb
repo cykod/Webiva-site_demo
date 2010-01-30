@@ -11,7 +11,7 @@ class SiteDemo::ManageController < ModuleController
   
 
   active_table :demo_domains_table, SiteDemoDomain, 
-  [ :check, :name, hdr(:boolean,:active), :activated_at,:expires_at, :template_name,
+  [ :check, :name, hdr(:boolean,:active), :activated_at,:expires_at, hdr(:string,"site_demo_templates.name",:label => 'Template'),
     :login_email, :login_password ]                                                    
 
   def display_demo_domains_table(display=true)
@@ -29,7 +29,7 @@ class SiteDemo::ManageController < ModuleController
       end
     end
 
-    @tbl = demo_domains_table_generate params, { :order => 'activated_at DESC' }
+    @tbl = demo_domains_table_generate params, { :order => 'activated_at DESC', :joins => :site_demo_template }
 
     render :partial => 'demo_domains_table' if display
   end
