@@ -75,6 +75,17 @@ class SiteDemoDomain < DomainModel
     url = "http://#{name}/website"
     link = "<a href='#{url}'>#{url}</a>"
 
+    mail_template = MailTemplate.find_by_id(opts.mail_template_id)
+    mail_template.deliver_to_address(self.login_email,
+                                     { :password => self.login_password,
+                                       :email => self.login_email,
+                                       :link => link,
+                                       :url => url,
+                                       :expires_at => self.expires_at.to_s(:short)
+                                     })
+    SiteDemoLogEntry.create(self.attributes.slice(:login_email,:login_password,:name,:site_demo_template_id))
+    
+
     attr = self.attributes.clone
     DomainModel.activate_domain(self.domain_id)
 
