@@ -68,7 +68,7 @@ class SiteDemo::AdminController < ModuleController
                  fld(:time_limit,:text_field,:description => 'Limit in minutes domain should be active'),
                  fld(:mail_template_id,:select,:options => :mail_templates)
                  )
-    def mail_templates
+    def self.mail_templates
       MailTemplate.select_options_with_nil
     end
                   
