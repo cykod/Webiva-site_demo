@@ -1,4 +1,4 @@
-
+require 'fileutils'
 
 class SiteDemoDomain < DomainModel
 
@@ -93,7 +93,12 @@ class SiteDemoDomain < DomainModel
         DomainModel.activate_domain(domain['domain_id'].to_i)
         EndUser.destroy_all
         domain_entry = Domain.find(domain['domain_id'])
+
+        FileUtils.rm_rf("#{RAILS_ROOT}/public/system/storage/#{domain_entry.file_store}")
+        FileUtils.rm_rf("#{RAILS_ROOT}/public/system/private/#{domain_entry.file_store}")
         domain_entry.update_attributes(:iteration => domain_entry.iteration + 1,:active => false,:inactive_message => 'This Demo has expired')
+
+        
       
         DomainModel.activate_domain(current_domain_id.to_i)
       end
