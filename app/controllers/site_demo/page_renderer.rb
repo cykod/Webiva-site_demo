@@ -18,7 +18,7 @@ class SiteDemo::PageRenderer < ParagraphRenderer
           paragraph.run_triggered_actions(@site_demo_domain.attributes,'action',myself)
           @created_domain = true
         elsif @site_demo_domain
-          paragraph.run_triggered_actions(@site_demo_domain.attributes.merge(:reason => @site_demo_domain.full_messages),'action',myself)
+          paragraph.run_triggered_actions(@site_demo_domain.attributes.merge(:reason => @site_demo_domain.errors.full_messages),'action',myself)
         end
       end
     end
