@@ -15,10 +15,10 @@ class SiteDemo::PageRenderer < ParagraphRenderer
       if tpl
         @site_demo_domain = SiteDemoDomain.new_domain(@site_demo_domain.login_email,tpl.id)
         if @site_demo_domain && @site_demo_domain.errors.length == 0
-          paragraph.run_triggered_actions(@site_demo_domain.attributes,'action',myself)
+          paragraph.run_triggered_actions(@site_demo_domain.attributes,'action',nil)
           @created_domain = true
         elsif @site_demo_domain
-          paragraph.run_triggered_actions(@site_demo_domain.attributes.merge(:reason => @site_demo_domain.errors.full_messages),'action',myself)
+          paragraph.run_triggered_actions(@site_demo_domain.attributes.merge(:reason => @site_demo_domain.errors.full_messages),'failed',nil)
         end
       end
     end
