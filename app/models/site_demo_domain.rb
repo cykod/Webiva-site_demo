@@ -3,6 +3,7 @@ require 'fileutils'
 class SiteDemoDomain < DomainModel
 
   validates_as_email :login_email
+  validates_presence_of :login_email
 
   has_many :site_demo_log_entries
 
