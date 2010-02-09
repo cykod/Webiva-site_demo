@@ -69,6 +69,7 @@ class SiteDemoDomain < DomainModel
     end
 
     opts =  SiteDemo::AdminController.module_options
+    self.login_password = self.class.generate_hash[0..10]
     self.expires_at = Time.now + (args[:expiration] || opts.time_limit).to_i.minutes
     self.activated_at = Time.now
     self.save
