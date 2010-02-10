@@ -21,10 +21,12 @@ class SiteDemoDomain < DomainModel
       return dmn
     end
 
+
     dmn = self.find(:first,:conditions => [ 'active=0'],:lock => true)
     if dmn
-      dmn.update_attributes(:active => true,:login_email => email_address, :site_demo_template_id => template_id,:expires_at => nil )
-      dmn.run_worker(:activate_domain, :expiration => expiration_minutes)
+      if dmn.update_attributes(:active => true,:login_email => email_address, :site_demo_template_id => template_id,:expires_at => nil )
+        dmn.run_worker(:activate_domain, :expiration => expiration_minutes)
+      end
       return dmn
     else
       cnt = SiteDemoDomain.count
