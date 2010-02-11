@@ -87,7 +87,7 @@ class SiteDemoDomain < DomainModel
                                        :url => url,
                                        :expires_at => self.expires_at.to_s(:short)
                                      })
-    SiteDemoLogEntry.create(self.attributes.slice(:login_email,:login_password,:name,:site_demo_template_id))
+    SiteDemoLogEntry.create(self.attributes.symbolize_keys.slice(:login_email,:login_password,:name,:site_demo_template_id))
     
 
     attr = self.attributes.clone
