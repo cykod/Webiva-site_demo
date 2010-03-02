@@ -2,8 +2,6 @@ require 'fileutils'
 
 class SiteDemoDomain < DomainModel
 
-  validates_as_email :login_email
-  validates_presence_of :login_email
 
   has_many :site_demo_log_entries
 
@@ -12,15 +10,12 @@ class SiteDemoDomain < DomainModel
   validates_uniqueness_of :domain_index
   validates_presence_of :site_demo_template
 
+  include WebivaCaptcha::ModelSupport
+
   attr_accessor :expiration_minutes
 
-  def self.new_domain(email_address,template_id,expiration_minutes = nil)
-    # Make sure they don't have multiple domains
-    if dmn = self.find(:first,:conditions => { :login_email => email_address, :active => true })
-      dmn.errors.add_to_base("The email is already used on an existing active demo.")
-      return dmn
-    end
-
+  def self.new_domain(template_id,expiration_minutes = nil)
+    email_address = 'demo@webiva.org'
 
     dmn = self.find(:first,:conditions => [ 'active=0'],:lock => true)
     if dmn
@@ -79,14 +74,16 @@ class SiteDemoDomain < DomainModel
     url = "http://#{name}/website"
     link = "<a href='#{url}'>#{url}</a>"
 
-    mail_template = MailTemplate.find_by_id(opts.mail_template_id)
-    mail_template.deliver_to_address(self.login_email,
+    if self.login_email != 'demo@webiva.org'
+      mail_template = MailTemplate.find_by_id(opts.mail_template_id)
+      mail_template.deliver_to_address(self.login_email,
                                      { :password => self.login_password,
                                        :email => self.login_email,
                                        :link => link,
                                        :url => url,
                                        :expires_at => self.expires_at.to_s(:short)
                                      })
+    end
     SiteDemoLogEntry.create(self.attributes.symbolize_keys.slice(:login_email,:login_password,:name,:site_demo_template_id))
     
 

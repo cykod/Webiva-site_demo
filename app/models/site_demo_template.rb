@@ -5,6 +5,7 @@ class SiteDemoTemplate < DomainModel
   validates_presence_of :name, :directory
   validates_numericality_of :weight
   
+  has_domain_file :image_id
 
   def validate
     if !File.directory?(self.full_directory)

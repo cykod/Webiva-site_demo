@@ -4,6 +4,8 @@
     <%= f.radio_buttons :protected_template, [['Yes',true],['No',false]] -%>
     <%= f.text_field :weight -%>
     <%= f.text_field :directory -%>
+    <%= f.filemanager_image :image_id -%>
+    <%= f.text_area :description -%>
     <%= f.cancel_submit_buttons -%>
   <% end -%>
 </div>
