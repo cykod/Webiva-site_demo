@@ -41,7 +41,13 @@ class SiteDemo::PageFeature < ParagraphFeature
         c.form_error_tag('available_domain:errors')
         c.loop_tag('available_domain:template') {  |t| data[:demo_templates] }
         c.image_tag('available_domain:template:image') { |t| t.locals.template.image }
-        c.h_tag('available_domain:template:description') {  |t| t.locals.template.description }
+        c.define_tag('available_domain:label') {  |t|
+          "<label for='#{ "domain_site_template_template_id_#{t.locals.template.id.to_s}" }'>" +
+           t.expand +
+           "</label>"
+
+        }
+        c.value_tag('available_domain:template:description') {  |t| t.locals.template.description }
         c.define_tag('available_domain:template:item') do |t|
           "<label for='#{ "domain_site_template_template_id_#{t.locals.template.id.to_s}" }'>" +
           radio_button_tag('domain[site_demo_template_id]',t.locals.template.id.to_s,data[:site_demo_domain].site_demo_template_id == t.locals.template.id, :id => "domain_site_template_template_id_#{t.locals.template.id.to_s}") +
