@@ -35,6 +35,8 @@ class SiteDemo::PageFeature < ParagraphFeature
   def site_demo_page_create_demo_feature(data)
     webiva_feature(:site_demo_page_create_demo,data) do |c|
       c.form_for_tag('available_domain','domain') { |t| (data[:available_domain] && !data[:created_domain] && !data[:activated_domain]) ? data[:site_demo_domain] : nil }
+        c.expansion_tag('no_available_domain') { |t|  (data[:available_domain] && !data[:created_domain] && !data[:activated_domain]) ? false : true }
+
 
         c.captcha_tag('available_domain:captcha') { |t| data[:captcha]}
 
@@ -51,7 +53,7 @@ class SiteDemo::PageFeature < ParagraphFeature
         c.define_tag('available_domain:template:item') do |t|
           "<label for='#{ "domain_site_template_template_id_#{t.locals.template.id.to_s}" }'>" +
           radio_button_tag('domain[site_demo_template_id]',t.locals.template.id.to_s,data[:site_demo_domain].site_demo_template_id == t.locals.template.id, :id => "domain_site_template_template_id_#{t.locals.template.id.to_s}") +
-           "#{t.locals.template.name}</label>"
+           " #{t.locals.template.name}</label>"
         end
 
         c.button_tag('available_domain:submit',:default_value => 'Submit')

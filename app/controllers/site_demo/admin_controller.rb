@@ -43,8 +43,9 @@ class SiteDemo::AdminController < ModuleController
       flash[:notice] = "Updated Site Demo module options".t 
       redirect_to :controller => '/modules'
       return
-    elsif request.post? 
+    elsif request.post? && !params[:commit] 
       redirect_to :controller => '/modules'
+      return
     end    
    render :template => '/application/options_form'
   end
