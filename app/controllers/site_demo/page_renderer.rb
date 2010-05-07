@@ -9,6 +9,8 @@ class SiteDemo::PageRenderer < ParagraphRenderer
     
     @available_domain = SiteDemoDomain.domains_available?
     @site_demo_domain = SiteDemoDomain.new(params[:domain])
+    @demo_templates = SiteDemoTemplate.find(:all,:conditions => {  :protected_template => false},:order => 'weight')
+    @site_demo_domain.site_demo_template_id = @demo_templates[0].id if  @site_demo_domain.site_demo_template_id.blank?
 
     @captcha = WebivaCaptcha.new(self)
 
@@ -48,7 +50,6 @@ class SiteDemo::PageRenderer < ParagraphRenderer
       end
                                                      
     end
-    @demo_templates = SiteDemoTemplate.find(:all,:conditions => {  :protected_template => false},:order => 'weight')
 
     render_paragraph :feature => :site_demo_page_create_demo
   end
