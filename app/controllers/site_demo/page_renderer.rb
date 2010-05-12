@@ -38,7 +38,7 @@ class SiteDemo::PageRenderer < ParagraphRenderer
         if @activated_domain.active? && @activated_domain.expires_at
           session[:site_demo_activated_domain] = nil
           @editor_login = EditorLogin.find_by_email_and_domain_id('demo@webiva.org',@activated_domain.domain_id)
-          if @editor_login
+          if @editor_login && !@editor_login.login_hash.blank?
             @domain_link = "http://#{@activated_domain.name}/website?login_hash=" + @editor_login.login_hash
           else
             @activated_domain = nil
